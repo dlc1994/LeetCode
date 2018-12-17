@@ -57,6 +57,43 @@ class Solution(object):
 
         return temp
 
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if l1 == None:
+            return l2
+        elif l2 == None:
+            return l1
+        
+        carry = 0
+        pre_l1 = None
+        head = l1
+        while (l1 != None and l2 != None): #两个链表长度相同部分用l1的空间存储值
+            tmp_sum = l1.val + l2.val + carry
+            carry = int((tmp_sum)/10)
+            l1.val = (tmp_sum)%10
+            
+            pre_l1 = l1
+            l1, l2 = l1.next, l2.next
+        
+        if l2 != None: #l2比l1长的部分
+            pre_l1.next = l2
+            l1 = pre_l1.next
+            
+        while l1 != None and carry == 1: #l1比l2长并且有进位
+            tmp_sum = l1.val+carry
+            l1.val = (tmp_sum)%10
+            carry = int((tmp_sum)/10)
+            pre_l1, l1 = l1, l1.next
+
+        if carry == 1:
+            pre_l1.next = ListNode(1)
+            
+        return head
+
 def stringToListNode(input):
     # Generate list from the input
     numbers = json.loads(input)
