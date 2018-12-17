@@ -7,6 +7,7 @@
 '''
 moves = "UD"
 
+
 class Solution:
     def judgeCircle(self, moves):
         """
