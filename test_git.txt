@@ -1,0 +1,13 @@
+测试如何上传本地
+第一次
+git init()
+git add 文件名
+git commit -m "备注”
+git remote add origin 远程地址库
+git push -u origin master //first push
+git push origin master
+
+后续
+git add 修改文件
+git commit -m "备注"
+git push origin master
