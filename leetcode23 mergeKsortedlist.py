@@ -24,6 +24,7 @@ class Solution:
                 l2.next = self.mergeTwoLists(l1, l2.next)
                 return l2
 
+    # 两两合并，超时 O(nk)
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         if lists == [] or lists[0] == []:
             return None
@@ -36,3 +37,12 @@ class Solution:
 
         root = helper(lists)
         return root
+    # 类似归并排序，复杂度O(nlogk)
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        amount = len(lists)
+        gap = 1
+        while gap < amount:
+            for i in range(0, amount-gap, gap*2):
+                lists[i] = self.mergeTwoLists(lists[i], lists[i+gap])
+            gap *= 2
+        return lists[0] if amount>0 else lists
