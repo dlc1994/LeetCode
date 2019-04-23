@@ -2,7 +2,7 @@
 '''
 @author: Lingcheng Dai
 @contact: 2013210288@bupt.edu.cn
-@file: roman2integer.py
+@file: leetcode13 roman2integer.py
 @time: 2018/12/19 10:19
 '''
 ss = "III"
