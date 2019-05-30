@@ -1,4 +1,5 @@
 // hard
+// 维护最短的一边，另一道两块板装水最多的同理
 class Solution {
 public:
     int trap(vector<int>& height) {
