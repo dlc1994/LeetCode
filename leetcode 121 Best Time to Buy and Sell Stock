@@ -1,0 +1,14 @@
+//dp O(n)
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size()==0) return 0;
+        int minVal = 0, minNum = prices[0];
+        for(int i=1;i<prices.size();++i){
+            int tmp = prices[i]-minNum;
+            minVal = max(minVal, tmp);
+            minNum = min(prices[i], minNum);
+        }
+        return minVal;
+    }
+};
