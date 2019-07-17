@@ -14,3 +14,21 @@ public:
         return maxVal;
     }
 };
+
+//DP O(n) O(1)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        int len = nums.size();
+        int sum = 0;
+        int Max = INT_MIN;
+        for(int i=0;i<len;i++)
+        {
+            if(sum < 0) sum = nums[i];
+            else sum += nums[i];
+            Max = max(sum,Max);
+        }
+        return Max;
+    }
+};
