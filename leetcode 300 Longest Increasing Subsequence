@@ -1,0 +1,22 @@
+//dp O(n*n) O(n)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        if(nums.size()==0) return 0;
+        if(nums.size()==1) return 1;
+        int len=nums.size();
+        vector<int> dp(len,1);
+        int maxVal = INT_MIN;
+        for(int i=1;i<len;++i){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]) dp[i]=max(dp[j]+1, dp[i]);
+            }
+            maxVal = max(dp[i], maxVal);
+        }
+        return maxVal;
+    }
+};
+//输出最长子序列
+
+
+//dp O(nlogn) O(n)
