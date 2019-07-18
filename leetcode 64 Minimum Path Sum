@@ -1,4 +1,4 @@
-//dp O(mn)
+//dp O(mn) O(mn)
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
