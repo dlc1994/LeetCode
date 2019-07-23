@@ -50,3 +50,17 @@ public:
 	return slow;
 }
 };
+
+// 递归
+	ListNode* FindKthToTail2(ListNode* pListHead, unsigned int k) {
+		if(pListHead==NULL)
+			return NULL;
+		ListNode* node=FindKthToTail(pListHead->next,k);
+		if(node!=NULL)
+			return node;
+		cnt++;
+		if(cnt==k)
+			return pListHead;
+		else
+			return NULL;
+	}
