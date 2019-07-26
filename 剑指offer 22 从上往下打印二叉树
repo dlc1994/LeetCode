@@ -1,0 +1,41 @@
+//题目描述
+//从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+//双端队列
+vector<int> PrintFromTopToBottom(TreeNode* root) {
+	vector<int> res;
+	if(root==NULL) return NULL;
+	deque<TreeNode*> d;
+	d.push_back(root);
+	while(!d.empty()){
+		root=d.front();
+		if(root!=NULL){
+			res.push_back(root->val);
+			d.push_back(root->left);
+			d.push_back(root->right);
+		}
+		d.pop_front();
+	}
+	return res;
+}
+
+//队列
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        vector<int> res;
+        if(root==NULL)
+            return res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            res.push_back(q.front()->val);
+            if(q.front()->left!=NULL)
+                q.push(q.front()->left);
+            if(q.front()->right!=NULL)
+                q.push(q.front()->right);
+            q.pop();
+        }
+        return res;
+    }
+};
