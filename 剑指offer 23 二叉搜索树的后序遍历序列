@@ -1,0 +1,28 @@
+//题目描述
+//输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+//如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+  bool VerifySquenceOfBST(vector<int> sequence) {
+      if (sequence.empty()) {
+          return false;
+      }
+      return helper(sequence, 0, sequence.size() - 1);
+  }
+
+  bool helper(vector<int> &sequence, int first, int last) { // first和last表示树序列的开始和结束的位置
+      if(first >= last){
+          return true;
+      }
+      int curIdx = first;
+      int rootVal = sequence[last]; // 后序遍历，根节点一定在最后，找到根节点后，就可以将树分为左右两棵子树，其中左子树中的元素都小于根节点，右子树中的元素都大于根节点
+      while(curIdx < last && sequence[curIdx] < rootVal){
+          ++curIdx;
+      }
+      int midIdx = curIdx; // 到curIdx的值大于根节点时，我们认为开始进入到右子树部分，用一个midIdx记录下当前的右子树开始的位置
+      while (curIdx < last){
+          if(sequence[curIdx] < rootVal){
+              return false;
+          }
+          ++curIdx;
+      }
+      return helper(sequence, first, midIdx - 1) && helper(sequence, midIdx, last - 1); // 再分别对左子树和右子树做同样的操作
+  }
