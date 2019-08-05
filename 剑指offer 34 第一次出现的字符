@@ -1,0 +1,19 @@
+//在一个字符串(0<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符,
+//并返回它的位置, 如果没有则返回 -1（需要区分大小写）.
+int FirstNotRepeatingChar(string str) {
+      int res=-1;
+  if(str.empty()) return res;
+  int len=str.size();
+  unordered_map<char, int> mp;
+  for(int i=0;i<len;i++){
+    mp[str[i]]++;
+    // cout<<mp[str[i]]<<endl;
+  }
+  for(int i=0;i<len;i++){
+    cout<<mp[str[i]]<<endl;
+    if(mp[str[i]]==1){
+       res=i;break;
+    }
+  }
+  return res;
+  }
