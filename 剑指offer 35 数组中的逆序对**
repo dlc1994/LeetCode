@@ -1,0 +1,54 @@
+//在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
+//输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 
+//即输出P%1000000007。例子：输入 1,2,3,4,5,6,7,0 输出 7
+//暴力求解 O(N*N)
+int InversePairs2(vector<int> data) {
+      int res=0;
+  if(data.empty()) return res;
+  int len=data.size();
+  for(int i=len-1;i>=0;i--){
+    for(int j=i-1;j>=0;j--){
+      if(data[j]>data[i]) res++;
+    }
+  }
+  return res;
+  }
+//归并排序 O(nlogn)
+int InversePairs(vector<int> data) {
+        int res=0;
+		if(data.empty()) return res;
+		int len=data.size();
+		vector<int> cp(len, 0);
+		for(int i=0;i<len;i++){
+			cp[i]=data[i];
+		}
+		res = mergeCount(data, cp, 0, len-1);
+		return res;
+    }
+	int mergeCount(vector<int> &arr, vector<int> &cp, int s, int e){
+		if(s==e) return 0;
+		int mid=(s+e)>>1;
+		int leftCount=mergeCount(arr, cp, s, mid)%1000000007;
+		int rightCount=mergeCount(arr, cp, mid+1, e)%1000000007;
+		int count=0,i=mid,j=e,locCopy=e;
+		while(i>=s && j>mid){
+			if(arr[i]>arr[j]){
+				count += j-mid;
+				cp[locCopy--] = arr[i--];
+				if(count>=1000000007) count%=1000000007;
+			}
+			else{
+				cp[locCopy--] = arr[j--];
+			}
+		}
+		for(;i>=s;i--){
+			cp[locCopy--]=arr[i];
+		}
+		for(;j>mid;j--){
+			cp[locCopy--]=arr[j];
+		}
+		for(int ss=s;ss<=e;ss++){
+			arr[ss]=cp[ss];
+		}
+		return (leftCount+rightCount+count)%1000000007;
+	}
