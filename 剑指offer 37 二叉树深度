@@ -1,0 +1,27 @@
+//输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）
+//形成树的一条路径，最长路径的长度为树的深度。
+//递归
+int TreeDepth(TreeNode* pRoot)
+  {
+  if(pRoot==NULL) return 0;
+  return max(TreeDepth(pRoot->left), TreeDepth(pRoot->right))+1;
+  }
+//非递归
+int TreeDepthNotLoop(TreeNode* pRoot)
+  {
+  int res=0;
+  if(pRoot==NULL) return res;
+  queue<TreeNode *> q;
+  q.push(pRoot);
+  while(!q.empty()){
+    int size=q.size();
+    res++;
+    for(int i=0;i<size;i++){
+      TreeNode* top=q.front();
+      q.pop();
+      if(top->left) q.push(top->left);
+      if(top->right) q.push(top->right);
+    }
+  }
+  return res;
+  }
