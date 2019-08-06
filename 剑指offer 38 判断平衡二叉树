@@ -1,0 +1,13 @@
+//输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+//如果二叉树的每个节点的左子树和右子树的深度不大于1，它就是平衡二叉树。
+bool IsBalanced_Solution(TreeNode* pRoot){
+  return pos_travel(pRoot)!=-1;
+  }
+int pos_travel(TreeNode* pRoot){
+  if(pRoot==NULL) return 0;
+  int left=pos_travel(pRoot->left);
+  if(left==-1) return -1;
+  int right=pos_travel(pRoot->right);
+  if(right==-1) return -1;
+  return abs(left-right)>1?-1:1+max(left, right);
+}
