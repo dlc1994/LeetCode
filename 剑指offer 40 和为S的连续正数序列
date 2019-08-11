@@ -1,6 +1,34 @@
 //剑指offer 40 和为S的连续正数序列
 //输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
-
+vector<vector<int> > FindContinuousSequence(int sum) {
+    vector<vector<int> > vOut;
+    vector<int> vIn;
+    if(sum==1) {
+        vIn.push_back(1);
+        vOut.push_back(vIn);
+        return vOut;
+    }
+    int left=1, right=2;
+    while(left<right){
+        int k=(left+right)*(right-left+1)/2;
+        if(sum==k) {
+            vector<int> vTmp;
+            for(int i=left;i<=right;i++){
+                vTmp.push_back(i);
+            }
+            vOut.push_back(vTmp);
+            right++;
+        }
+        else if(sum>k) {
+            right++;
+        }
+        else {
+            left++;
+        }
+    }
+    return vOut;
+}
+//O(
 vector<vector<int> > FindContinuousSequence(int sum) {
   vector<vector<int>> res;
   if(sum<=2) return res;
