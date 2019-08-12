@@ -1,0 +1,36 @@
+//一组数字，判断是否顺子。0为任意数，如果牌能组成顺子就输出true，否则就输出false。
+	// O(n)
+	bool IsContinuous( vector<int> numbers ) {
+		if(numbers.empty()) return false;
+		vector<int> arr(14, 0);
+		arr[0]=-5;
+		int Min=14, Max=-1;
+		for (int i=0;i<numbers.size();i++){
+			arr[numbers[i]]++;
+			if(numbers[i]==0) continue;
+			if(arr[numbers[i]]>1) return false;
+			if (numbers[i]<Min) {
+				Min = numbers[i];
+			}
+			if (numbers[i]>Max) {
+				Max = numbers[i];
+			}
+		}
+		if(Max-Min>4) return false;
+		return true;
+    }
+	// O(nlogn)
+    bool IsContinuous( vector<int> numbers ) {
+        sort(numbers.begin(), numbers.end());
+        int cnt0 = 0, cntNeed = 0;
+        for(int i = 0; i < 5; i++) {
+            if(numbers[i] == 0) {
+                ++cnt0;
+            } else if(i + 1 < 5 ) {
+                if(numbers[i + 1] == numbers[i]) return false;
+                cntNeed += numbers[i + 1] - numbers[i] - 1;
+            }
+        }
+        if(cntNeed > cnt0) return false;
+        return true;
+    }
