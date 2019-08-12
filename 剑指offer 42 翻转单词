@@ -1,0 +1,39 @@
+//“student. a am I”->“I am a student.”
+	string ReverseSentence1(string str) {
+		string res = "";
+		if(str.empty()) return res;
+		vector <string> s;
+		int index=0;
+		string tmp="";
+		while(index < str.size()){
+			if (str[index]==' ') {
+				s.push_back(tmp);
+				tmp="";
+			}
+			else{
+				tmp+=str[index];
+			}
+			if(index==str.size()-1) s.push_back(tmp);
+			index++;
+		}
+		for (int i=s.size()-1;i>=0;i--) {
+			res += s[i];
+			if(i!=0) res += ' ';
+		}
+        return res;
+    }
+
+    string ReverseSentence(string str) {
+        std::reverse(str.begin(),str.end());
+        int front=0;
+        int back=0;
+        int size = str.size();
+        while(front<size){
+            while(front<size&&str[front]==' ')++front; //跳过空格，找第一个非空字母位置
+            back=front;
+            while(back<size&&str[back]!=' ')++back; //找单词最后一个字符的位置
+            std::reverse(str.begin()+front, str.begin()+back); //反转
+            front=back;
+        }
+        return str;
+    }
