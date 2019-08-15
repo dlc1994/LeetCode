@@ -1,0 +1,36 @@
+//给定一个数组A[0, 1, ..., n - 1], 请构建一个数组B[0, 1, ..., n - 1],
+//其中B中的元素B[i] = A[0] * A[1] * ... * A[i - 1] * A[i + 1] * ... * A[n - 1]。不能使用除法。
+// recurrent O(n*n)
+vector<int> multiplyN2(const vector<int>& A) {
+  vector<int> B;
+  if (A.empty()) return B;
+  for (int i = 0; i < A.size(); i++) {
+    B.push_back(ABhelper(A, A.size()-1, i));
+  }
+  return B;
+}
+int ABhelper(vector<int> A, int n, int k) {
+  if (n == k && n == 0) return 1;
+  if (n == k && n > 0) return ABhelper(A, n - 1, k);
+  if (n == 0) return A[0];
+  return ABhelper(A, n - 1, k) * A[n];
+}
+// 上下三角求解合并
+链接：https://www.nowcoder.com/questionTerminal/94a4d381a68b47b7a8bed86f2975db46?f=discussion
+vector<int> multiply(const vector<int>& A) {
+  vector<int> B;
+  if (A.empty()) return B;
+  int len = A.size();
+  // cal up triangle
+  B.push_back(1);
+  for (int i = 1; i < len; i++) {
+    B.push_back(B[i - 1] * A[i - 1]);
+  }
+  // cal down triangle
+  int down =1;
+  for (int i = len - 2; i >= 0; i--) {
+    down *= A[i + 1];
+    B[i] *= down;
+  }
+  return B;
+}
