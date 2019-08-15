@@ -1,0 +1,12 @@
+	//求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+int Sum_Solution(int n) {
+  if (n<=0) return 0;
+  if (n==1) return 1;
+  return Sum_Solution(n-1)+n;
+ }
+int Sum_Solution(int n) {
+    int ans = n;
+//逻辑与有个短路特点，前面为假，后面不计算。
+    ans && (ans += Sum_Solution(n - 1));
+    return ans;
+}
