@@ -1,0 +1,37 @@
+//请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，
+    //而'*'表示它前面的字符可以出现任意次（包含0次）。在本题中，匹配是指字符串的所有字符匹配整个模式。
+    //例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配
+    bool match(char* str, char* pattern){
+        if (str == NULL || pattern == NULL)  return false;
+        int strIndex = 0, patternIndex = 0;
+        return matchHelper(str, pattern);
+    }
+    bool matchHelper(char* str, char* pattern) {
+        // str到尾，pattern到尾，匹配成功
+        // 注意下指针和string字符串判断是否为空的区别
+        if (*str == '\0' && *pattern == '\0') return true;
+        // pattern为空，str不空，匹配必定失败
+        if (*pattern == '\0' && *str != '\0') return false;
+
+        // 如果pattern下一个字符不为'*'
+        if (*(pattern + 1) != '*') {
+            // 匹配成功情况：
+            // 1. 当前str字符==当前pattern字符
+            // 2. pattern为'.'且当前str不为空
+            if (*pattern == *str || (*pattern == '.' && *str != '\0')){
+                return matchHelper(str+1, pattern+1);
+            }
+            else return false;
+        }
+
+        // 如果pattern下一个字符为'*'
+        else {
+            // 继续匹配的情况：
+            // 1. 当‘*’匹配0个字符时，str当前字符不变，pattern当前字符后移两位，跳过这个‘*’符号；
+            // 2. 当‘*’匹配1个或多个时，str当前字符移向下一个，pattern当前字符不变。
+            if (*pattern == *str || (*pattern == '.' && *str != '\0')) {
+                return matchHelper(str+1,pattern) || matchHelper(str, pattern+2);
+            }
+            else return matchHelper(str, pattern+2);
+        }
+    }
