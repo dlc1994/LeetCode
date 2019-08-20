@@ -1,0 +1,61 @@
+// 剑指offer 58 对称的二叉树
+// 请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+// 直接递归
+bool isSymmetricalRec(TreeNode* pRoot)
+{
+    if (!pRoot) return true;
+    return isSym(pRoot->left, pRoot->right);
+}
+bool isSym(TreeNode* p1, TreeNode* p2) {
+    if (p1==NULL) return p2==NULL;
+    if (p2==NULL) return false;
+    if (p1->val != p2->val) return false;
+    if (p1->val == p2->val) return isSym(p1->left, p2->right) && isSym(p1->right, p2->left);
+}
+
+// DFS
+bool isSymmetricalDFS(TreeNode* pRoot)
+{
+    if (!pRoot) return true;
+    deque<TreeNode*> d;
+    d.push_back(pRoot->left);
+    d.push_back(pRoot->right);
+    while (!d.empty()) {
+        TreeNode* right = d.front();
+        d.pop_front();
+        TreeNode* left = d.front();
+        d.pop_front();
+        if (left==NULL && right==NULL) continue;
+        if (left==NULL || right==NULL) return false;
+        if (left->val != right->val) return false;
+        else {
+            d.push_back(left->left);
+            d.push_back(right->right);
+            d.push_back(right->left);
+            d.push_back(left->right);
+        }
+    }
+    return true;
+}
+    
+// 搞一个镜像树看看是不是真的相同 目前还有错
+bool isSymmetrical(TreeNode* pRoot)
+{
+    if (!pRoot) return true;
+    TreeNode* mRoot = MirrorH(pRoot);
+    return isSymHelper(pRoot, mRoot);
+}
+TreeNode* MirrorH(TreeNode* mRoot) {
+    if (mRoot == NULL) return NULL;
+    TreeNode *tmp = mRoot->left;
+    mRoot->left = mRoot->right;
+    mRoot->right = tmp;
+    if (mRoot->left) mRoot->left = MirrorH(mRoot->left);
+    if (mRoot->right) mRoot->right = MirrorH(mRoot->right);
+    return mRoot;
+}
+bool isSymHelper(TreeNode* p1, TreeNode* p2) {
+    if (p1==NULL && p2==NULL) return true;
+    if (p1->val==p2->val) return isSymHelper(p1->left,p2->left) && isSymHelper(p1->right, p2->right);
+    if (p1->val != p2->val) return false;
+}
