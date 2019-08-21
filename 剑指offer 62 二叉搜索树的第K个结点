@@ -1,0 +1,35 @@
+// 剑指offer 62 二叉搜索树的第K个结点
+// 给定一棵二叉搜索树，请找出其中的第k小的结点。例如，（5，3，7，2，4，6，8）中，按结点数值大小顺序第三小结点的值为4。
+// 递归
+int index = 0;
+TreeNode* KthNode(TreeNode* pRoot, int k)
+{
+    if (pRoot != NULL) {
+        TreeNode* node = KthNode(pRoot->left, k);
+        if (node != NULL) return node;
+        if (++index == k) return pRoot;
+        node = KthNode(pRoot->right, k);
+        if (node != NULL) return node;
+    }
+    return NULL;
+}
+// 非递归
+TreeNode* KthNodeNotRec(TreeNode* pRoot, int k)
+{
+    if (pRoot == NULL || k <= 0) return NULL;
+    stack<TreeNode*> s;
+    TreeNode* node = pRoot;
+    int cnt = 0;
+    while (!s.empty() || node) {
+        while (node) {
+            s.push(node);
+            node = node->left;
+        }
+        node = s.top();
+        s.pop();
+        cnt++;
+        if (cnt == k) return node;
+        node = node->right;
+    }
+    return NULL;
+}
